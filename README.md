@@ -35,7 +35,7 @@ El proyecto reproduce escenarios habituales en empresas del sector inmobiliario 
 
 proyecto_sql_inmobiliaria
 │
-├── 01_modelo.sql
+├── 01_schema.sql
 ├── 02_data.sql
 ├── 03_consultas.sql
 ├── 04_views.sql
@@ -180,6 +180,44 @@ El proyecto incorpora un fichero específico de análisis exploratorio que inclu
 * Segmentación de clientes.
 * Forecast de ventas.
 * Dashboard ejecutivo inmobiliario.
+
+
+____ 
+
+## Resultados obtenidos
+
+El modelo permite analizar:
+
+- Rendimiento comercial por oficina.
+- Rendimiento individual de agentes.
+- Evolución temporal de ventas y alquileres.
+- Rentabilidad por zona.
+- Comisiones generadas.
+- Descuentos aplicados sobre precio publicado.
+- Tiempo medio de comercialización de inmuebles.
+
+Se han implementado:
+- 5 tablas de dimensión.
+- 1 tabla de hechos.
+- 5 vistas analíticas.
+- Más de 20 consultas SQL avanzadas.
+- Procesos básicos de calidad del dato.
+
+⸻
+## Dataset
+
+| Elemento | Total |
+|-----------|--------|
+| Clientes | 13 |
+| Agentes | 12 |
+| Oficinas | 6 |
+| Inmuebles | 20 |
+| Operaciones | 30 |
+| Vistas analíticas | 5 |
+
+⸻
+## Capturas
+
 
 ⸻
 
