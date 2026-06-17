@@ -67,9 +67,11 @@ La tabla principal es `fact_operaciones`, que almacena cada operación comercial
 
 ![Modelo dimensional](imagenes/conexiones-entre-tablas.png)
 
-### Estructura de tablas
+## 📈 Vistas Analíticas del Proyecto
 
-![Tablas del proyecto](imagenes/tablas.png)
+Las siguientes vistas encapsulan la lógica de negocio y facilitan el análisis comercial e inmobiliario sin necesidad de consultar directamente las tablas base.
+
+![Vistas analíticas](imagenes/tablas.png)
 
 ---
 
