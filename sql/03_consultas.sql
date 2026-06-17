@@ -18,7 +18,6 @@ UPDATE dim_clientes
 SET canal_origen = 'Desconocido'
 WHERE canal_origen IS NULL;
 
-/* AGREGACIONES */
 /* ============================================================
    AGREGACIONES BÁSICAS DEL MODELO
    Objetivo: entender el volumen, valor medio y comisiones
@@ -72,7 +71,7 @@ FROM fact_operaciones
 WHERE precio_cierre IS NOT NULL;
 
 
-/* CASE */
+/* == CASE == */
 SELECT
     nombre_cliente,
     edad,
@@ -83,7 +82,7 @@ SELECT
     END AS segmento
 FROM dim_clientes;
 
-/* CTE */
+/* == CTE == */
 
 WITH ventas AS (
 
@@ -102,7 +101,7 @@ WITH ventas AS (
 SELECT *
 FROM ventas;
 
-/* CTE ENCADENADA: rendimiento por oficina */
+/* == CTE ENCADENADA: rendimiento por oficina == */
 
 WITH ventas_oficina AS (
 
@@ -137,7 +136,7 @@ SELECT *
 FROM ranking_oficinas;
 
 
-/* FUNCIÓN VENTANA */
+/* == FUNCIÓN VENTANA == */
 SELECT
 
     nombre_agente,
@@ -158,7 +157,7 @@ WHERE estado_operacion = 'Cerrada'
 GROUP BY nombre_agente;
 
 
-/* SUBQUERY */
+/* == SUBQUERY == */
 SELECT *
 
 FROM fact_operaciones
@@ -171,14 +170,11 @@ WHERE precio_cierre >
     WHERE precio_cierre IS NOT NULL
 );
 
-/* LEFT JOIN */
+/* == LEFT JOIN == */
 SELECT
-
     c.nombre_cliente,
     f.operacion_id
-
 FROM dim_clientes c
-
 LEFT JOIN fact_operaciones f
 ON c.cliente_id = f.cliente_id;
 
@@ -188,8 +184,8 @@ ON c.cliente_id = f.cliente_id;
    CONSULTAS ANALÍTICAS DE NEGOCIO
    ============================================================ */
 
--- 1. Ventas cerradas por oficina
--- Insight: permite identificar qué oficina genera mayor volumen económico.
+/* 1. Ventas cerradas por oficina
+ Insight: permite identificar qué oficina genera mayor volumen económico. */
 
 SELECT
     o.nombre_oficina,
@@ -204,8 +200,8 @@ GROUP BY o.nombre_oficina
 ORDER BY volumen_ventas DESC;
 
 
--- 2. Rendimiento comercial por agente
--- Insight: permite comparar productividad y comisiones generadas por agente.
+/* 2. Rendimiento comercial por agente
+Insight: permite comparar productividad y comisiones generadas por agente. */
 
 SELECT
     a.nombre_agente,
@@ -225,8 +221,8 @@ GROUP BY
 ORDER BY comision_total DESC;
 
 
--- 3. Precio medio de cierre por zona
--- Insight: permite detectar las zonas con mayor valor inmobiliario medio.
+/* 3. Precio medio de cierre por zona
+ Insight: permite detectar las zonas con mayor valor inmobiliario medio. */
 
 SELECT
     i.ciudad,
@@ -244,8 +240,8 @@ GROUP BY
 ORDER BY precio_medio_cierre DESC;
 
 
--- 4. Tipo de inmueble más vendido
--- Insight: muestra qué producto inmobiliario tiene mayor rotación.
+/* 4. Tipo de inmueble más vendido
+ Insight: muestra qué producto inmobiliario tiene mayor rotación. */
 
 SELECT
     i.tipo_inmueble,
@@ -258,8 +254,8 @@ GROUP BY i.tipo_inmueble
 ORDER BY total_operaciones DESC;
 
 
--- 5. Días medios en mercado según estado del inmueble
--- Insight: permite comprobar si los inmuebles reformados o nuevos se venden más rápido.
+/* 5. Días medios en mercado según estado del inmueble
+ Insight: permite comprobar si los inmuebles reformados o nuevos se venden más rápido. */
 
 SELECT
     i.estado_inmueble,
@@ -273,8 +269,8 @@ GROUP BY i.estado_inmueble
 ORDER BY dias_medios_mercado ASC;
 
 
--- 6. Descuento medio entre precio publicado y precio de cierre
--- Insight: detecta zonas donde se negocia más el precio inicial.
+/* 6. Descuento medio entre precio publicado y precio de cierre
+ Insight: detecta zonas donde se negocia más el precio inicial. */
 
 SELECT
     i.ciudad,
@@ -294,8 +290,8 @@ GROUP BY
 ORDER BY descuento_pct_medio DESC;
 
 
--- 7. Evolución mensual de operaciones cerradas
--- Insight: permite observar estacionalidad y meses con mayor actividad.
+/* 7. Evolución mensual de operaciones cerradas
+ Insight: permite observar estacionalidad y meses con mayor COMISIÓN. */
 
 SELECT
     c.anio,
@@ -313,11 +309,11 @@ GROUP BY
     TRIM(c.nombre_mes)
 ORDER BY
     c.anio,
-    c.mes;
+	comision_total DESC;
 
 
--- 8. Ranking de agentes por comisión generada
--- Insight: identifica los agentes con mayor aportación económica.
+/* 8. Ranking de agentes por comisión generada
+ Insight: identifica los agentes con mayor aportación económica. */
 
 SELECT
     a.nombre_agente,
@@ -337,8 +333,8 @@ GROUP BY
     o.nombre_oficina;
 
 
--- 9. Comparativa de operaciones por canal de origen del cliente
--- Insight: muestra qué canales generan más operaciones cerradas.
+/* 9. Comparativa de operaciones por canal de origen del cliente
+ Insight: muestra qué canales generan más operaciones cerradas. */
 
 SELECT
     c.canal_origen,
@@ -353,8 +349,8 @@ GROUP BY c.canal_origen
 ORDER BY comision_total DESC;
 
 
--- 10. Clientes sin operaciones mediante LEFT JOIN
--- Insight: permite detectar clientes registrados que todavía no han generado operaciones.
+/* 10. Clientes sin operaciones mediante LEFT JOIN
+ Insight: permite detectar clientes registrados que todavía no han generado operaciones. */
 
 SELECT
     c.cliente_id,
@@ -371,8 +367,8 @@ GROUP BY
 HAVING COUNT(f.operacion_id) = 0;
 
 
--- 11. Operaciones por encima del precio medio de cierre
--- Insight: identifica operaciones de alto valor mediante subquery.
+/* 11. Operaciones por encima del precio medio de cierre
+ Insight: identifica operaciones de alto valor mediante subquery. */
 
 SELECT
     f.operacion_id,
@@ -391,8 +387,8 @@ WHERE f.precio_cierre > (
 ORDER BY f.precio_cierre DESC;
 
 
--- 12. CTE encadenada para ranking de oficinas
--- Insight: compara oficinas por comisiones y precio medio de cierre.
+/* 12. CTE encadenada para ranking de oficinas
+ Insight: compara oficinas por comisiones y precio medio de cierre. */
 
 WITH ventas_oficina AS (
 

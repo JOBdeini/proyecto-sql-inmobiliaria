@@ -34,6 +34,11 @@ CREATE TABLE dim_clientes (
         )
 );
 
+-- Comprobación de la tabla Clientes
+select *
+from dim_clientes
+
+
 /* ============================================================
    TABLA DIMENSIÓN: OFICINAS
    Granularidad: una fila por oficina
@@ -62,6 +67,9 @@ CREATE TABLE dim_oficinas (
 
 );
 
+-- Comprobación de la tabla Oficinas
+select *
+from dim_oficinas
 
 /* ============================================================
    TABLA DIMENSIÓN: AGENTES
@@ -113,9 +121,9 @@ CREATE TABLE dim_agentes (
         )
 );
 
-
+--- Comprobación de la tabla Agentes
 select * 
-from dim_clientes 
+from dim_agentes
 limit 5
 
 
@@ -196,6 +204,10 @@ CREATE TABLE dim_inmuebles (
         CHECK (precio_estimado > 0)
 );
 
+-- Comprobación de la tabla Inmuebles
+select * 
+from dim_inmuebles
+
 /* ============================================================
    TABLA DIMENSIÓN: CALENDARIO
    Granularidad: una fila por fecha
@@ -241,6 +253,10 @@ CREATE TABLE dim_calendario (
         CHECK (numero_dia_semana BETWEEN 1 AND 7)
 );
 
+-- Comprobación de la tabla Calendario
+select *
+from dim_calendario
+limit 10
 
 /* ============================================================
    TABLA DE HECHOS: OPERACIONES
@@ -286,6 +302,8 @@ CREATE TABLE fact_operaciones (
     forma_pago VARCHAR(50),
 
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Establecemos las conexiones
 
     CONSTRAINT fk_operacion_fecha
         FOREIGN KEY (fecha_id)
@@ -361,6 +379,12 @@ CREATE TABLE fact_operaciones (
         )
 );
 
+-- Comprobación de la tabla de hecho operaciones
+select *
+from fact_operaciones
+limit 10
+
+
 /* ============================================================
    ÍNDICES DEL MODELO
 
@@ -397,9 +421,9 @@ CREATE INDEX IF NOT EXISTS idx_dim_agentes_oficina
 ON dim_agentes(oficina_id);
 
 
-/*=========================
+/*===========================================
  * COMPROBAMOS QUE ESTÁN CREADOS LOS ÍNDICES
- ========================== */
+ ========================================== */
 
 SELECT
     indexname,
@@ -467,7 +491,8 @@ WHERE f.estado_operacion = 'Cerrada'
 
 GROUP BY
     a.agente_id,
-    a.nombre_agente;
+    a.nombre_agente
+order by comisiones desc;
 
 /* =======================================
  * FUNCIÓN para calcular la comisión media
@@ -490,7 +515,7 @@ AND estado_operacion = 'Cerrada';
 $$;
 
 
-/* Prueba */
+-- Comprobación
 SELECT fn_comision_media_agente(11);
 
 

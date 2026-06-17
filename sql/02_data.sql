@@ -23,7 +23,7 @@ VALUES
 
 COMMIT;
 
-
+-- Comprobación datos oficinas
 SELECT *
 FROM dim_oficinas;
 
@@ -66,8 +66,7 @@ VALUES
 COMMIT;
 
 
-/* VERIFICACIÓN */
-
+-- Comprobación datos agentes
 SELECT *
 FROM dim_agentes
 ORDER BY oficina_id, agente_id;
@@ -112,8 +111,7 @@ VALUES
 
 COMMIT;
 
-/* VERIFICACIÓN */
-
+-- Comprobación datos clientes
 SELECT *
 FROM dim_clientes
 ORDER BY cliente_id;
@@ -168,8 +166,7 @@ VALUES
 
 COMMIT;
 
-/* VERIFICACIÓN - Conteo de inmuebles */
-
+-- Comprobación conteo inmuebles
 SELECT COUNT(*)
 FROM dim_inmuebles;
 
@@ -226,13 +223,12 @@ FROM generate_series(
 COMMIT;
 
 
-/* VERIFICACIÓN -  */
-
+-- Comprobación conteo de datos calendario
 SELECT COUNT(*)
 FROM dim_calendario;
 
-/* VERIFICACIÓN - de filas */
 
+-- Comprobación de filas
 SELECT *
 FROM dim_calendario
 LIMIT 10;
@@ -301,13 +297,12 @@ VALUES
 COMMIT;
 
 
-/* VERIFICACIÓN -  */
-
+-- Comprobación conteo OperacionesHechos
 SELECT COUNT(*)
 FROM fact_operaciones;
 
 
-/* RELACIONES */
+-- Comprobación Relaciones y Joins entre tablas que confluyen en OperacionesHechos
 
 SELECT
     f.operacion_id,
@@ -333,12 +328,12 @@ ORDER BY f.operacion_id;
 
 
 /* ==================================================
- CLIENTES SIN OPERACIONES PARA LA CONSULTA EN EL EDA 
+ CREACIÓN DE CLIENTES SIN OPERACIONES PARA LA CONSULTA EN EL EDA 
 Incluí clientes sin operaciones para demostrar el uso 
 de LEFT JOIN y detectar oportunidades comerciales pendientes de seguimiento. 
 ====================================================== */
 
-/* Clientes sin operaciones para probar LEFT JOIN */
+-- Clientes sin operaciones 
 
 BEGIN;
 
