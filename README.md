@@ -63,7 +63,7 @@ El modelo sigue una estructura tipo estrella (**Star Schema**), con una tabla ce
 
 La tabla principal es `fact_operaciones`, que almacena cada operación comercial inmobiliaria. Alrededor de ella se conectan las dimensiones necesarias para analizar las operaciones desde diferentes perspectivas: cliente, inmueble, agente, oficina y calendario.
 
-### Diagrama entidad-relación
+### Diagrama del modelo dimensional
 
 ![Modelo dimensional](imagenes/conexiones-entre-tablas.png)
 
