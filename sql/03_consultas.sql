@@ -87,19 +87,27 @@ FROM dim_clientes;
 WITH ventas AS (
 
     SELECT
-        oficina_id,
-        SUM(comision_importe) AS total_comisiones
+        f.oficina_id,
+        o.nombre_oficina,
+        SUM(f.comision_importe) AS total_comisiones
 
-    FROM fact_operaciones
+    FROM fact_operaciones f
 
-    WHERE estado_operacion = 'Cerrada'
+    INNER JOIN dim_oficinas o
+        ON f.oficina_id = o.oficina_id
 
-    GROUP BY oficina_id
+    WHERE f.estado_operacion = 'Cerrada'
+
+    GROUP BY
+        f.oficina_id,
+        o.nombre_oficina
 
 )
 
 SELECT *
-FROM ventas;
+FROM ventas
+ORDER BY total_comisiones DESC;
+
 
 /* == CTE ENCADENADA: rendimiento por oficina == */
 
