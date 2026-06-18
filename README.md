@@ -49,7 +49,7 @@ proyecto_sql_inmobiliaria/
 │
 ├── imagenes/
 │   ├── conexiones-entre-tablas.png
-│   └── tablas.png
+│   └── vistas.png
 │
 ├── .gitignore
 └── README.md
