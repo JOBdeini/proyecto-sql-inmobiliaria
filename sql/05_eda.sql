@@ -109,6 +109,27 @@ ORDER BY anio, mes;
 
 
 /* =====================================
+ * FORMAS DE PAGO
+ ====================================== */
+
+SELECT
+    forma_pago,
+    COUNT(*) AS total_operaciones,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (),
+        2
+    ) AS porcentaje_operaciones,
+    SUM(precio_cierre) AS volumen_ventas,
+    SUM(comision_importe) AS comision_total
+FROM fact_operaciones
+WHERE estado_operacion = 'Cerrada'
+GROUP BY forma_pago
+ORDER BY comision_total DESC;
+
+
+
+/* =====================================
  * INSIGHT DE NEGOCIO
  ====================================== */
 
@@ -135,7 +156,6 @@ SELECT
         2
     ) AS dias_medios
 FROM vw_ventas_cerradas;
-
 
 
 /* =====================================

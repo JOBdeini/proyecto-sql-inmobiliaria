@@ -1,3 +1,9 @@
+/* ============================================================
+   TABLA DIMENSIÓN: CLIENTES
+   Granularidad: una fila por cliente
+   ============================================================ */
+
+
 DROP TABLE IF EXISTS dim_clientes CASCADE;
 
 CREATE TABLE dim_clientes (
@@ -517,7 +523,6 @@ $$;
 
 -- Comprobación
 SELECT fn_comision_media_agente(11);
-
 
 
 

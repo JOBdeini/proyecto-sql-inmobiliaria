@@ -71,7 +71,7 @@ FROM fact_operaciones
 WHERE precio_cierre IS NOT NULL;
 
 
-/* == CASE == */
+/* == CASE Segmentación por edades == */
 SELECT
     nombre_cliente,
     edad,
@@ -82,7 +82,8 @@ SELECT
     END AS segmento
 FROM dim_clientes;
 
-/* == CTE == */
+/* == CTE Comisiones por zona == */
+-- Zonas que generan más ingresos
 
 WITH ventas AS (
 
@@ -109,7 +110,7 @@ FROM ventas
 ORDER BY total_comisiones DESC;
 
 
-/* == CTE ENCADENADA: rendimiento por oficina == */
+/* == CTE ENCADENADA: rendimiento por oficina - Ranking == */
 
 WITH ventas_oficina AS (
 
@@ -144,7 +145,7 @@ SELECT *
 FROM ranking_oficinas;
 
 
-/* == FUNCIÓN VENTANA == */
+/* == FUNCIÓN VENTANA - Ranking de agentes con más comisiones generadas == */
 SELECT
 
     nombre_agente,
@@ -165,7 +166,7 @@ WHERE estado_operacion = 'Cerrada'
 GROUP BY nombre_agente;
 
 
-/* == SUBQUERY == */
+/* == SUBQUERY Operaciones con precio de cierre no nulo == */
 SELECT *
 
 FROM fact_operaciones
@@ -178,7 +179,7 @@ WHERE precio_cierre >
     WHERE precio_cierre IS NOT NULL
 );
 
-/* == LEFT JOIN == */
+/* == LEFT JOIN Operación id con nombre de cliente relacionado == */
 SELECT
     c.nombre_cliente,
     f.operacion_id
@@ -236,7 +237,7 @@ SELECT
     i.ciudad,
     i.zona,
     COUNT(*) AS operaciones,
-    AVG(f.precio_cierre) AS precio_medio_cierre
+    ROUND(AVG(f.precio_cierre)) AS precio_medio_cierre
 FROM fact_operaciones f
 INNER JOIN dim_inmuebles i
     ON f.inmueble_id = i.inmueble_id
@@ -268,7 +269,7 @@ ORDER BY total_operaciones DESC;
 SELECT
     i.estado_inmueble,
     COUNT(*) AS operaciones,
-    AVG(f.dias_en_mercado) AS dias_medios_mercado
+    ROUND(AVG(f.dias_en_mercado)) AS dias_medios_mercado
 FROM fact_operaciones f
 INNER JOIN dim_inmuebles i
     ON f.inmueble_id = i.inmueble_id
@@ -283,9 +284,9 @@ ORDER BY dias_medios_mercado ASC;
 SELECT
     i.ciudad,
     i.zona,
-    AVG(f.precio_publicado - f.precio_cierre) AS descuento_medio,
-    AVG(
-        ((f.precio_publicado - f.precio_cierre) / f.precio_publicado) * 100
+    ROUND(AVG(f.precio_publicado - f.precio_cierre)) AS descuento_medio,
+    ROUND(AVG(
+        ((f.precio_publicado - f.precio_cierre) / f.precio_publicado)) * 100
     ) AS descuento_pct_medio
 FROM fact_operaciones f
 INNER JOIN dim_inmuebles i
@@ -429,3 +430,18 @@ ranking_oficinas AS (
 
 SELECT *
 FROM ranking_oficinas;
+
+
+/* =======================================
+ * CONSULTA FORMAS DE PAGO DE LAS VENTAS CERRADAS
+======================================== */
+SELECT
+    forma_pago,
+    COUNT(*) AS total_operaciones,
+    SUM(precio_cierre) AS volumen_ventas,
+    SUM(comision_importe) AS comision_total,
+    ROUND(AVG(precio_cierre), 2) AS precio_medio_cierre
+FROM fact_operaciones
+WHERE estado_operacion = 'Cerrada'
+GROUP BY forma_pago
+ORDER BY comision_total DESC;

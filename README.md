@@ -1,6 +1,6 @@
 # 🏠 Proyecto SQL Inmobiliario
 
-## Data Warehouse y Análisis de Negocio con PostgreSQL
+## Data Warehouse, Business Intelligence y Analítica Inmobiliaria con PostgreSQL
 
 ## 📌 Descripción
 
@@ -54,6 +54,59 @@ proyecto_sql_inmobiliaria/
 ├── .gitignore
 └── README.md
 ```
+
+---
+
+## 🔄 Flujo de Trabajo del Proyecto
+
+El proyecto sigue una secuencia completa de construcción y análisis de un Data Warehouse inmobiliario:
+
+### 1. Diseño del Modelo
+
+Creación del esquema dimensional tipo estrella:
+
+- Clientes
+- Agentes
+- Oficinas
+- Inmuebles
+- Calendario
+- Tabla de hechos de operaciones
+
+Archivo:
+
+`01_schema.sql`
+
+### 2. Carga de Datos
+
+Generación e inserción de datos sintéticos realistas para simular la actividad de una agencia inmobiliaria con múltiples oficinas y agentes.
+
+Archivo:
+
+`02_data.sql`
+
+### 3. Consultas Exploratorias
+
+Desarrollo de consultas descriptivas y analíticas para validar el modelo y obtener indicadores de negocio.
+
+Archivo:
+
+`03_consultas.sql`
+
+### 4. Construcción de Vistas Analíticas
+
+Creación de vistas reutilizables para explotación comercial y herramientas BI.
+
+Archivo:
+
+`04_views.sql`
+
+### 5. Análisis Exploratorio de Datos (EDA)
+
+Obtención de métricas, detección de patrones e identificación de oportunidades de negocio.
+
+Archivo:
+
+`05_eda.sql`
 
 ---
 
@@ -217,10 +270,12 @@ Incluye:
 ## ⚙️ Tecnologías Utilizadas
 
 - PostgreSQL 18
-- DBeaver
 - SQL
+- DBeaver
 - Git
 - GitHub
+- Data Warehouse (Star Schema)
+- Business Intelligence
 
 ---
 
@@ -269,6 +324,27 @@ El EDA incluye:
 - Descuento medio aplicado.
 - Días medios en mercado.
 - Resumen ejecutivo de operaciones cerradas.
+
+---
+
+## 🔎 Consultas Analíticas Implementadas
+
+El proyecto incorpora consultas orientadas a responder preguntas reales de negocio dentro del sector inmobiliario.
+
+Entre ellas destacan:
+
+- Ventas cerradas por oficina.
+- Rendimiento comercial por agente.
+- Precio medio de cierre por ciudad y zona.
+- Tipología de inmueble más comercializada.
+- Días medios en mercado por estado del inmueble.
+- Descuento medio aplicado sobre el precio publicado.
+- Evolución temporal de operaciones.
+- Ranking de agentes por comisión generada.
+- Comparativa de canales de captación.
+- Identificación de clientes sin operaciones asociadas.
+
+Estas consultas combinan agregaciones, joins, CTEs y funciones ventana para generar indicadores útiles para la toma de decisiones.
 
 ---
 
@@ -333,6 +409,54 @@ El modelo permite responder preguntas de negocio como:
 - ¿Qué canales de captación generan más operaciones?
 - ¿Cómo evolucionan las ventas por año y mes?
 
+### Indicadores Ejecutivos
+
+A partir de las operaciones cerradas durante los años 2024 y 2025 se obtuvieron los siguientes resultados:
+
+| Indicador | Valor |
+|------------|-----------:|
+| Operaciones cerradas | 24 |
+| Volumen total de ventas | 6.230.250 € |
+| Comisiones generadas | 198.090 € |
+| Precio medio de cierre | 259.595 € |
+| Días medios en mercado | 38,79 |
+
+Estos indicadores permiten evaluar la actividad comercial, la rentabilidad del negocio y la velocidad de comercialización de los inmuebles.
+
+---
+
+## 💡 Principales Insights de Negocio
+
+El análisis exploratorio permitió identificar diversos patrones relevantes:
+
+### Captación de Clientes
+
+El canal con mayor capacidad de captación es la Web, seguido de la recomendación directa de clientes.
+
+### Distribución Geográfica
+
+La mayor concentración de clientes se encuentra en Córdoba y Málaga, reproduciendo un escenario realista para una agencia con presencia en ambas provincias.
+
+### Precio por Tipología
+
+Los chalets presentan el precio medio más elevado, mientras que estudios y locales comerciales muestran valores significativamente inferiores.
+
+### Rendimiento Comercial
+
+La oficina de Málaga Centro concentra el mayor volumen de operaciones y de negocio generado.
+
+### Análisis Territorial
+
+La zona Centro de Málaga es la que registra una mayor actividad inmobiliaria dentro del conjunto de operaciones analizadas.
+
+### Comportamiento del Mercado
+
+La tipología más demandada es el piso y el tiempo medio de comercialización se mantiene por debajo de los 40 días, reflejando una rotación relativamente rápida de los activos.
+
+### Evolución Temporal
+
+La actividad comercial se distribuye entre los ejercicios 2024 y 2025, permitiendo analizar tendencias y evolución del negocio a lo largo del tiempo.
+
 ---
 
 ## 🚀 Posibles Evoluciones
@@ -368,4 +492,6 @@ Para reproducir el proyecto desde cero, ejecutar los scripts en este orden:
 
 **Job Delgado**
 
-Proyecto desarrollado como práctica avanzada de SQL, modelado dimensional y análisis de datos orientado al sector inmobiliario.
+Proyecto desarrollado como práctica avanzada de SQL, modelado dimensional, Business Intelligence y análisis de datos aplicado al sector inmobiliario durante el Máster en Data Science e Inteligencia Artificial de Evolve Academy.
+
+El objetivo ha sido reproducir un escenario empresarial real mediante la construcción de un Data Warehouse, la creación de indicadores de negocio, el desarrollo de vistas analíticas y la obtención de insights orientados a la toma de decisiones comerciales.
