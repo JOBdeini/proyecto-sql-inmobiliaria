@@ -19,6 +19,12 @@ El proyecto reproduce escenarios habituales en una empresa del sector inmobiliar
 - Análisis de mercado inmobiliario.
 - Evaluación de comisiones, descuentos y tiempos de comercialización.
 
+### 📄 Presentación del Proyecto
+
+Para una visión ejecutiva del proyecto, incluyendo resultados, métricas e insights de negocio:
+
+📥 [Ver presentación completa](PRESENTACION_SQL_PROJECT.pdf)
+
 ---
 
 ## 🎯 Objetivos del Proyecto
